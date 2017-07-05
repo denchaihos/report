@@ -1,0 +1,20 @@
+DELETE from tsu_temp_report WHERE reportname="F3xx";
+INSERT INTO tsu_temp_report(id,reportname,date1,s1,s2,s3,s4,date3,s5,n1,s7)
+select "1","F3xx",o.vstdttm as vstdate,
+( CASE p.male WHEN 1 THEN IF( p.mrtlst < 6, 
+IF( DATE_FORMAT( NOW( ) , '%Y' ) - DATE_FORMAT( p.brthdate, '%Y' ) - ( DATE_FORMAT( NOW( ) , '00-%m-%d' ) < DATE_FORMAT( p.brthdate, '00-%m-%d' ) ) < 15, 'ด.ช.', 'นาย' ),
+IF( DATE_FORMAT( NOW( ) , '%Y' ) - DATE_FORMAT( p.brthdate, '%Y' ) - ( DATE_FORMAT( NOW( ) , '00-%m-%d' ) < DATE_FORMAT( p.brthdate, '00-%m-%d' ) ) < 20, 'ส.ณ.', 'พระ' )) 
+WHEN 2 THEN IF( p.mrtlst = 1,
+IF( DATE_FORMAT( NOW( ) , '%Y' ) - DATE_FORMAT( p.brthdate, '%Y' ) - ( DATE_FORMAT( NOW( ) , '00-%m-%d' ) < DATE_FORMAT( p.brthdate, '00-%m-%d' ) ) < 15, 'ด.ญ.', 'น.ส.' ),
+IF( p.mrtlst < 6, 'นาง', 'แม่ชี' )) END) AS prename
+,concat(p.fname,"  ",p.lname) as ptname,if(p.male=1,'ชาย','หญิง')as male,
+p.pop_id,
+concat(DAYOFMONTH(p.brthdate),'/',MONTH(p.brthdate),'/',YEAR(p.brthdate)) as birth,
+concat(p.addrpart,"  หมู่ ",p.moopart,"  ต. ",t.nametumb,"  อ. ",a.nameampur,"  จ. ",c.namechw) as address,YEAR(o.vstdttm) - YEAR(p.brthdate) ,od.icd10 
+from ovstdx od join ovst o on o.vn=od.vn 
+LEFT OUTER JOIN pt p on p.hn=o.hn
+JOIN tumbon t on t.chwpart=p.chwpart and t.amppart=p.amppart and t.tmbpart=p.tmbpart
+JOIN ampur a on a.chwpart=p.chwpart and a.amppart=p.amppart 
+JOIN changwat c on c.chwpart=p.chwpart
+where left(od.icd10,3) in ('F32','F33','F34','F38','F39') 
+and date(o.vstdttm) BETWEEN :startdate and :enddate GROUP BY o.hn;

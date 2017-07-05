@@ -1,0 +1,5 @@
+DELETE FROM tsu_temp_report WHERE reportname='post care';
+INSERT INTO tsu_temp_report(id,reportname,s1,n1)
+SELECT '1','post care','MCH Visit',count(*) as num from ovstdx ox JOIN ovst o ON o.vn=ox.vn  WHERE date(o.vstdttm) BETWEEN :startdate and :enddate AND ox.icd10 BETWEEN 'Z391' AND 'Z392' ;
+INSERT INTO tsu_temp_report(id,reportname,s1,n1)
+SELECT '1','post care','PP Visit',count(*) as num from ovstdx ox JOIN ovst o ON o.vn=ox.vn  WHERE date(o.vstdttm) BETWEEN :startdate and :enddate AND ox.icd10 BETWEEN 'Z001' AND 'Z001' ;

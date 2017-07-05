@@ -1,0 +1,7 @@
+DELETE FROM tsu_temp_report WHERE reportname='dentalCost';
+INSERT INTO tsu_temp_report(id,reportname,s1) VALUES ('1','dentalCost','OPD');
+update tsu_temp_report set n1=(SELECT count(DISTINCT(o.vn)) from ovst o join incoth ic on ic.vn=o.vn where date(o.vstdttm) BETWEEN :startdate and :enddate and o.cln='40100' ) WHERE reportname='dentalCost';
+update tsu_temp_report set n2=(SELECT sum(ic.rcptamt) from ovst o join incoth ic on ic.vn=o.vn where date(o.vstdttm) BETWEEN :startdate and :enddate  and o.cln='40100' ) WHERE reportname='dentalCost';
+INSERT INTO tsu_temp_report(id,reportname,s1) VALUES ('2','dentalCost','IPD');
+update tsu_temp_report set n1=(SELECT count(*) from ovst o join ipt i on i.an=o.an where date(i.dchdate) BETWEEN :startdate and :enddate and o.cln='40100') WHERE reportname='dentalCost'   AND id=2;
+update tsu_temp_report set n2=(SELECT sum(ic.rcptamt) from ovst o join ipt i on i.an=o.an JOIN incoth ic on ic.an=i.an where date(i.dchdate) BETWEEN :startdate and :enddate and o.cln='40100') WHERE reportname='dentalCost'   AND id=2;

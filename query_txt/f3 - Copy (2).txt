@@ -1,0 +1,15 @@
+﻿DELETE from tsu_temp_report WHERE reportname="F3xx";
+INSERT INTO tsu_temp_report(id,reportname,date1,s1,s2,s3,s4,s5)    
+SELECT "1" as id,"F3xx" as reportname,date(o.vstdttm) as visitdate,
+concat(p.fname,"  ",p.lname) as ptname,
+if(p.male=1,"ชาย","หญิง")as male,
+p.pop_id,
+YEAR(o.vstdttm) - YEAR(p.brthdate) as age,
+concat(p.addrpart," mo",p.moopart,t.nametumb,a.nameampur,c.namechw) as ad
+from ovstdx od join ovst o on o.vn=od.vn 
+LEFT OUTER JOIN pt p on p.hn=o.hn
+JOIN tumbon t on t.chwpart=p.chwpart and t.amppart=p.amppart and t.tmbpart=p.tmbpart
+JOIN ampur a on a.chwpart=p.chwpart and a.amppart=p.amppart 
+JOIN changwat c on c.chwpart=p.chwpart
+where left(od.icd10,3) in ("F32","F33","F34","F38","F39") 
+and date(o.vstdttm) BETWEEN "2016-01-01" and "2016-01-30" GROUP BY o.hn

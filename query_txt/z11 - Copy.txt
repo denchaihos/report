@@ -1,0 +1,60 @@
+DELETE FROM tsu_temp_report WHERE reportname='TB_Z11';
+set @startdate = '2015-10-01';
+set @enddate = '2016-09-30'; 
+
+/*DM*/
+set @start_icd10 = 'E11';
+set @end_icd10 = 'E119';
+INSERT INTO tsu_temp_report(id,reportname,s1,s2,date1,date2,n1)
+SELECT  
+	1,
+	'TB_Z11',
+	'DM',
+	CONCAT(@start_icd10 ,'-', @end_icd10),
+	@startdate,@enddate,
+  sums
+FROM(
+SELECT t1.icd10,COUNT(*) as sums  from 
+( SELECT o.hn,ox.icd10,ox.cnt from ovst o JOIN ovstdx ox on ox.vn=o.vn where  ox.icd10 BETWEEN @start_icd10 AND  @end_icd10  group by o.hn) as t1
+JOIN 
+( SELECT o.hn,ox.icd10,ox.cnt from ovst o JOIN ovstdx ox on ox.vn=o.vn where ox.icd10 BETWEEN 'Z11' and 'Z111' AND date(o.vstdttm) BETWEEN @startdate and @enddate group by o.hn) as t2
+on t1.hn=t2.hn
+) as sums;
+/*copd*/
+set @start_icd10 = 'J449';
+set @end_icd10 = 'J449';
+INSERT INTO tsu_temp_report(id,reportname,s1,s2,date1,date2,n1)
+SELECT  
+	1,
+	'TB_Z11',
+	'COPD',
+	CONCAT(@start_icd10 ,'-', @end_icd10),
+	@startdate,@enddate,
+  sums
+FROM(
+SELECT t1.icd10,COUNT(*) as sums  from 
+( SELECT o.hn,ox.icd10,ox.cnt from ovst o JOIN ovstdx ox on ox.vn=o.vn where  ox.icd10 BETWEEN @start_icd10 AND  @end_icd10  group by o.hn) as t1
+JOIN 
+( SELECT o.hn,ox.icd10,ox.cnt from ovst o JOIN ovstdx ox on ox.vn=o.vn where ox.icd10 BETWEEN 'Z11' and 'Z111' AND date(o.vstdttm) BETWEEN @startdate and @enddate group by o.hn) as t2
+on t1.hn=t2.hn
+) as sums;
+/*IHD*/
+set @start_icd10 = 'I20';
+set @end_icd10 = 'I25';
+INSERT INTO tsu_temp_report(id,reportname,s1,s2,date1,date2,n1)
+SELECT  
+	1,
+	'TB_Z11',
+	'IHD',
+	CONCAT(@start_icd10 ,'-', @end_icd10),
+	@startdate,@enddate,
+  sums
+FROM(
+SELECT t1.icd10,COUNT(*) as sums  from 
+( SELECT o.hn,ox.icd10,ox.cnt from ovst o JOIN ovstdx ox on ox.vn=o.vn where  ox.icd10 BETWEEN @start_icd10 AND  @end_icd10  group by o.hn) as t1
+JOIN 
+( SELECT o.hn,ox.icd10,ox.cnt from ovst o JOIN ovstdx ox on ox.vn=o.vn where ox.icd10 BETWEEN 'Z11' and 'Z111' AND date(o.vstdttm) BETWEEN @startdate and @enddate group by o.hn) as t2
+on t1.hn=t2.hn
+) as sums;
+SELECT id,s1 as 'ª×èÍâÃ¤',s2 as 'icd10',concat(date1,' - ',date2) as daterang,n1 as sums
+from tsu_temp_report WHERE reportname='TB_Z11';
