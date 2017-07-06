@@ -99,6 +99,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">เครื่องมือ <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
+                        <li><a href="#" onclick="setConfig();">Database Setting</a></li>
                         <li><a href="index.php?createReport">ตัวช่วยสร้างรายงาน</a></li>
                         <li><a href="manageReport/index.php">Manage</a></li>
 

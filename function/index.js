@@ -94,6 +94,17 @@ function showEMR(id){
     });
 
 }
+function setConfig(){
+    $.ajax({
+        url: 'edit_config.php'
+    }).success(function(data){
+        alertify.myAlert(data).set('resizable',true).resizeTo('50%','85%');
+        $('td#vstdate:first').trigger('click');
+    }).error(function(){
+        alertify.error('Errro loading external file.');
+    });
+}
+
 
 
 
