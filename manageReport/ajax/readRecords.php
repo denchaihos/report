@@ -1,5 +1,6 @@
 <?php
 // include Database connection file
+include '../../readConfig.php';
 include("../../connect_pdo.php");
 
 // Design initial table header

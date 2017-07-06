@@ -1,7 +1,13 @@
 <?php
 //$config = array();
-if (trim(file_get_contents('config/db.txt')) == true) {
-$myFile = "config/db.txt";
+if (!defined('ROOT')){
+define('ROOT',str_replace("\\",'/',dirname(__FILE__)));
+define('PATH', ROOT == $_SERVER['DOCUMENT_ROOT']
+    ?'' :substr(ROOT,strlen($_SERVER['DOCUMENT_ROOT']))
+);
+}
+if (trim(file_get_contents(ROOT.'/config/db.txt')) == true) {
+$myFile = ROOT."/config/db.txt";
 $fh = fopen($myFile, 'r');
 $theData = fread($fh, filesize($myFile));
 $assoc_array = array();
@@ -10,7 +16,7 @@ $my_array = explode("\n", $theData);
 
 
 
-    if (($handle = fopen("config/db.txt", "r")) !== FALSE) {
+    if (($handle = fopen( ROOT."/config/db.txt", "r")) !== FALSE) {
 
         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
             $tmp = explode(":", $data[0]);

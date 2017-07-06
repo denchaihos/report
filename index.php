@@ -62,6 +62,13 @@
 </head>
 <body>
 <?php
+/*define('ROOT',str_replace("\\",'/',dirname(__FILE__)));
+define('PATH', ROOT == $_SERVER['DOCUMENT_ROOT']
+    ?'' :substr(ROOT,strlen($_SERVER['DOCUMENT_ROOT']))
+);
+
+echo "root=".ROOT,'<br />';
+echo "path=".PATH,'<br />';*/
 include 'connect_pdo.php';
 include "main_menu.php";
 $data = array();

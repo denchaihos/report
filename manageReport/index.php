@@ -24,7 +24,9 @@
 
 </style>
 <body>
+<?php
 
+?>
 <!-- Content Section -->
 <div class="container">
     <br>

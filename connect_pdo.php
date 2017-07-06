@@ -1,6 +1,5 @@
 <?php
 include 'readConfig.php';
-
 /*$host = trim($config['host']);
 $uname = trim($config['username']);
 $passwd = trim($config['password']);
