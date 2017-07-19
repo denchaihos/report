@@ -3,6 +3,7 @@ $reportId = !isset($_GET['reportId']) ? $_GET['reportId'] : $_GET['reportId'];
 $reportName = isset($_GET['reportName']) ? $_GET['reportName'] : $_GET['reportName'];
 $eq = isset($_GET['eq']) ? $_GET['eq'] : "";
 $fex = isset($_GET['fex']) ? $_GET['fex'] : "";
+$mysqli = isset($_GET['mysqli']) ? $_GET['mysqli'] : "";
 $startDate = !empty($_GET['startDate']) ? $_GET['startDate'] : "";
 $endDate = !empty($_GET['endDate']) ? $_GET['endDate'] : "";
 ?>
@@ -42,6 +43,7 @@ $endDate = !empty($_GET['endDate']) ? $_GET['endDate'] : "";
                     <input type="hidden" name="reportName" value="<? echo $reportName ?>">
                     <input type="hidden" name="fex" id="fex" value="<? echo $fex ?>">
                     <input type="hidden" name="eq" id="eq" value="<? echo $eq ?>">
+                    <input type="hidden" name="mysqli" id="mysqli" value="<? echo $mysqli ?>">
                     <div class="form-group">
                         <div class='input-group date' id='datetimepicker_start'>
                             <span class="input-group-btn">

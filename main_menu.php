@@ -64,11 +64,11 @@
                                             <?php
                                             try {
                                                 $db2 = new PDO('mysql:host='.$HOST_NAME.';dbname='.$DB_NAME.';'.$CHAR_SET,$USERNAME,$PASSWORD);
-                                                $report_query2 ="SELECT *,IF(e_query is null,'N','Y') as eq,IF(file_ex is null,'N','Y') as fex,custom_report FROM tsureport WHERE dep = '". $row['dep_id']."'";
+                                                $report_query2 ="SELECT *,IF(e_query is null,'N','Y') as eq,IF(file_ex is null,'N','Y') as fex,custom_report,mysqli FROM tsureport WHERE dep = '". $row['dep_id']."'";
                                                 $sql2 = $db2->prepare($report_query2);
                                                 $sql2->execute();
                                                 while ($row2 = $sql2->fetch())  {
-                                                    echo "<li><a href='index.php?reportId=".$row2['id']."&reportName=".$row2['namereport']."&eq=".$row2['eq']."&fex=".$row2['file_ex']."&custom_report=".$row2['custom_report']."'>";
+                                                    echo "<li><a href='index.php?reportId=".$row2['id']."&reportName=".$row2['namereport']."&eq=".$row2['eq']."&fex=".$row2['file_ex']."&custom_report=".$row2['custom_report']."&mysqli=".$row2['mysqli']."'>";
                                                     echo $row2['namereport'];
                                                     echo "</a></li>";
                                                 }

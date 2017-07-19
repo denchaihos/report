@@ -1,12 +1,12 @@
 <?php
-//if (isset($_GET['startDate']) ) {
+if (isset($_GET['startDate']) ) {
     include "connectMysqli.php";
 
-    /*$reportId = $_GET['reportId'];
+    $reportId = $_GET['reportId'];
     $limit = $_GET['limit'];
     $row_per_page = $_GET['row_per_page'];
-    $startDate = $_GET['startDate'];
-    $endDate = $_GET['endDate'];*/
+    $StartDate = $_GET['startDate'];
+    $EndDate = $_GET['endDate'];
 
     $report_query = "SELECT * FROM tsureport WHERE id=42";
     $result = $mysqli->query($report_query);
@@ -17,11 +17,11 @@
 
     echo '<br>';
 
-    $StartDate = "2016-10-01";
-    $EndDate = '2017-01-01';
+   // $StartDate = "2016-10-01";
+    //$EndDate = '2017-01-01';
     $report_query =  str_replace("StartDate",$StartDate,$sql_text);
     $report_query =  str_replace("EndDate",$EndDate,$report_query);
-    echo $report_query;
+   // echo $report_query;
         echo "<hr>";
         foreach ($charset as $charset) {
             $mysqli->set_charset($charset);
@@ -83,3 +83,5 @@
         }
         $mysqli->close();
     echo $data;
+    exit;
+}

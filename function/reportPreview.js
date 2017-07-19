@@ -119,6 +119,8 @@ function readRecords(num) {
         var limit = (num - 1) * row_per_page;
     }
     var fex = $("input#fex").val();
+    var mysqli = $("input#mysqli").val();
+
     if(fex!=''){
         //alert("file");
         $.ajax({
@@ -150,18 +152,33 @@ function readRecords(num) {
         });
     }else{
         //alert("no file");
-        $.get("reportPreviewData.php", {reportId:reportId,limit:limit,row_per_page:row_per_page,startDate:startDate,endDate:endDate}, function (data) {
-            $(".records_content").html(data);
-            var row_count =  data.match(/<span id="num_row" style="display: inline">(.*?)<\/span>/)[1];
-            $(".show_page").html("หน้าที่ " +num+" / "+ row_count);
-            // $(".total").html("จำนวนอุบัติการ   ครั้ง");
-            $('.dem2').bootpag({
-                total: Math.ceil(row_count / row_per_page),
-                page: num,
-                maxVisible: 5//Math.ceil(numrow/row_per_page)
-            })
-        });
-        $("#export").show();
+        if(mysqli!=''){
+            $.get("reportPreviewDataMysqli.php", {reportId:reportId,limit:limit,row_per_page:row_per_page,startDate:startDate,endDate:endDate}, function (data) {
+                $(".records_content").html(data);
+                /*var row_count =  data.match(/<span id="num_row" style="display: inline">(.*?)<\/span>/)[1];
+                $(".show_page").html("หน้าที่ " +num+" / "+ row_count);
+                // $(".total").html("จำนวนอุบัติการ   ครั้ง");
+                $('.dem2').bootpag({
+                    total: Math.ceil(row_count / row_per_page),
+                    page: num,
+                    maxVisible: 5//Math.ceil(numrow/row_per_page)
+                })*/
+            });
+            $("#export").show();
+        }else{
+            $.get("reportPreviewData.php", {reportId:reportId,limit:limit,row_per_page:row_per_page,startDate:startDate,endDate:endDate}, function (data) {
+                $(".records_content").html(data);
+                var row_count =  data.match(/<span id="num_row" style="display: inline">(.*?)<\/span>/)[1];
+                $(".show_page").html("หน้าที่ " +num+" / "+ row_count);
+                // $(".total").html("จำนวนอุบัติการ   ครั้ง");
+                $('.dem2').bootpag({
+                    total: Math.ceil(row_count / row_per_page),
+                    page: num,
+                    maxVisible: 5//Math.ceil(numrow/row_per_page)
+                })
+            });
+            $("#export").show();
+        }
     }
 
 }
