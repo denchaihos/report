@@ -35,8 +35,8 @@ if (isset($_GET['startDate']) ) {
         $end_date = $endDate;
         $ps->bindParam(1, $start_date, PDO::PARAM_STR);
         $ps->bindParam(2, $end_date, PDO::PARAM_STR);
-
-
+        $ps->nextRowset();
+        $ps->fetchAll(PDO::FETCH_ASSOC);
         $ps->execute();
 
         $total_column = $ps->columnCount();

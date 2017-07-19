@@ -25,6 +25,7 @@ try {
 
     $sql = $db->prepare($report_query);
     $sql->execute();
+
     $sql = $sql->fetch();
     $sql_text = $sql['e_query'];
     $ps = $db->prepare($sql_text);
