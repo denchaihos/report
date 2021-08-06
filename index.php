@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" href="jquery/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css"/>
     <link type="text/css" rel="stylesheet" href="jquery/jquery-ui/jquery-ui.theme.min.css"/>
     <link type="text/css" rel="stylesheet" href="jquery/jquery-ui/jquery-ui.structure.min.css"/>
+    <script src="jquery/jspdf.min.js"></script>
     <link type="text/css" rel="stylesheet" href="css/font-awesome-4.6.3/css/font-awesome.min.css"/>
     <link type="text/css" rel="stylesheet" href="jquery/jqplot/dist/jquery.jqplot.min.css"/>
     <link type="text/css" rel="stylesheet" href="jquery/jqplot/dist/examples/syntaxhighlighter/styles/shCoreDefault.min.css"/>
@@ -48,7 +49,7 @@
     <script src="jquery/transition.js" type="text/javascript"></script>
     <script src="jquery/collapse.js" type="text/javascript"></script>
     <script src="jquery/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-
+    <script type="text/javascript" src="jquery/pdfobject/pdfobject.js"></script>
     <style>
         /*.total1 {
             background-color: #000;
@@ -80,7 +81,7 @@ $data = array();
     if(isset($_GET['reportId']) && $_GET['custom_report']=='N'){
         include "reportPreview.php";
     }elseif(isset($_GET['reportId']) && $_GET['custom_report']=='Y'){
-        include "custom_report/custom_report1.php";
+        include "specialReport/index.php";
     }elseif(isset($_GET['report'])){
         include "report.php";
     }elseif(isset($_GET['createReport'])){

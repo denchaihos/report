@@ -27,7 +27,8 @@ $endDate = !empty($_GET['endDate']) ? $_GET['endDate'] : "";
                             <li role="separator" class="divider"></li>
                             <button  class="btn btn-success btn-xs"  onclick="exportXLS()" >EXECEL <i class="fa fa-file-excel-o fa-2x" aria-hidden="true"></i></button></li>
 
-                            <button  class="btn btn-danger btn-xs" onclick="exportCSV()">PDF <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i></button>
+                            <button  class="btn btn-danger btn-xs" onclick="openPdf()">PDF <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i></button>
+                            <!--<button  class="btn btn-danger btn-xs" onclick="exportCSV()">PDF <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i></button>-->
 
                             <button  class="btn btn-primary btn-xs" onclick="exportCSV()">CSV <i class="fa fa-file-o fa-2x" aria-hidden="true"></i></button></li>
                             <button  class="btn btn-warning btn-xs" onclick="exportCSV()">Printer <i class="fa fa-print fa-2x" aria-hidden="true"></i></button></li>
@@ -69,6 +70,7 @@ $endDate = !empty($_GET['endDate']) ? $_GET['endDate'] : "";
 
 
                     <input type="button" name="show"  id="show_data" class="btn btn-success" value="Show" onclick="readRecords(1)" >
+                    <input type="button" name="show"  id="show_data" class="btn btn-success" value="Show" onclick="pdf()" >
                     <input type="button" name="InsertDX" id="excute_data" class="btn btn-danger" value="ExcuteScript" onclick="excuteForm('excute_report.php')" >
 
                     <script type="text/javascript">
@@ -107,7 +109,7 @@ $endDate = !empty($_GET['endDate']) ? $_GET['endDate'] : "";
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="records_content">
+                        <div class="records_content" id="pdf">
 
 
                         </div>

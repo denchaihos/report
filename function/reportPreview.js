@@ -5,6 +5,7 @@
 
 
 function submitForm(num) {
+    alert('densubmit');
     var row_per_page =2;
     if (typeof num === 'undefined' || num === null){
         var limit = 0;
@@ -122,13 +123,13 @@ function readRecords(num) {
     var mysqli = $("input#mysqli").val();
 
     if(fex!=''){
-        //alert("file");
+        //alert(fex);
         $.ajax({
             type: "GET",
             url: "excuteTextfile.php" ,
             data:{startdate:startDate,enddate:endDate,file_ex:fex},
             success : function() {
-                alert(data);
+                alert('excute Data Success');
                 $.get("reportPreviewData.php", {reportId:reportId,limit:limit,row_per_page:row_per_page,startDate:startDate,endDate:endDate}, function (data) {
                     $(".records_content").html(data);
                     var row_count =  data.match(/<span id="num_row" style="display: inline">(.*?)<\/span>/)[1];

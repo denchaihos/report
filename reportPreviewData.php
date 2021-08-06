@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_GET['startDate']) ) {
+if (isset($_GET['startDate'])) {
     include "connect_pdo.php";
 
     $reportId = $_GET['reportId'];
@@ -19,23 +19,31 @@ if (isset($_GET['startDate']) ) {
         $sql = $sql->fetch();
         $reportName = $sql['namereport'];
         $sql_text = $sql['r_query'];
+        $sql_db = $sql['db'];
         //row count
-        $numrows = $db->prepare($sql_text);
+        if ($sql_db = 'hi') {
+            $numrows = $db->prepare($sql_text);
+        } else {
+            $numrows = $db2->prepare($sql_text);
+        }
         $numrows->bindParam(1, $startDate, PDO::PARAM_STR);
         $numrows->bindParam(2, $endDate, PDO::PARAM_STR);
         $numrows->execute();
         $rowCount = $numrows->rowCount();
 
-        $sql_text .= " limit ".$limit.",".$row_per_page;
+        $sql_text .= " limit " . $limit . "," . $row_per_page;
         //  column  head
 
-        $ps = $db->prepare($sql_text);
+        if ($sql_db = 'hi') {
+            $ps = $db->prepare($sql_text);
+        } else {
+            $ps = $db2->prepare($sql_text);
+        }
 
         $start_date = $startDate;
         $end_date = $endDate;
         $ps->bindParam(1, $start_date, PDO::PARAM_STR);
         $ps->bindParam(2, $end_date, PDO::PARAM_STR);
-
 
         $ps->execute();
 
@@ -52,7 +60,7 @@ if (isset($_GET['startDate']) ) {
         for ($x = 0; $x < $total_column; $x++) {
             $data .= "<th>
                         $column[$x]
-                        &nbsp;<input type='button' id='".$column[$x]."' value='&#931' onclick='sumTotalByColumn(this.id)'><br/><span id='".$column[$x]."'></span></th>";
+                        &nbsp;<input type='button' id='" . $column[$x] . "' value='&#931' onclick='sumTotalByColumn(this.id)'><br/><span id='" . $column[$x] . "'></span></th>";
         }
         $data .= "</tr>
                     </thead>
@@ -61,31 +69,30 @@ if (isset($_GET['startDate']) ) {
         while ($row = $ps->fetch()) {
             $data .= "<tr>";
             for ($x = 0; $x < $total_column; $x++) {
-                $data .= "<td>".
-                        $row[$column[$x]]
-                        ."</td>";
+                $data .= "<td>" .
+                    $row[$column[$x]]
+                    . "</td>";
             }
             $data .= "</tr>";
 
         }
         $data .= "<tr>";
         /*for ($x = 0; $x < $total_column; $x++) {
-            if($x==0){
-                //$data .= "<td>รวมจำนวน    ".$rowCount."  รายการ</td>";
-                $data .= "<td><span id='num_row' style='display: inline'>".$rowCount."</span> record";
-                $data .= "<input type='text' id=''></td>";
-            }else{
-                $data .= "<td></td>";
-            }
+        if($x==0){
+        //$data .= "<td>รวมจำนวน    ".$rowCount."  รายการ</td>";
+        $data .= "<td><span id='num_row' style='display: inline'>".$rowCount."</span> record";
+        $data .= "<input type='text' id=''></td>";
+        }else{
+        $data .= "<td></td>";
+        }
         }*/
         $data .= "</tr>
                     </tbody>
                     </table>";
 
-
         echo $data;
         ?>
-         <p>จำนวน <span id="num_row" style="display: inline"><? echo $rowCount ?></span> รายการ</p>
+         <p>จำนวน <span id="num_row" style="display: inline"><?echo $rowCount ?></span> รายการ</p>
 <?
 
     } catch (PDOException $e) {
